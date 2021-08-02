@@ -40,11 +40,12 @@ else:
   import termios
 import random
 import time
+from DA_agent import Agent
 
-
-class AgentMove():
+class AgentMove(Agent):
     def __init__(self, turtlebot3_model):
-        self.turtlebot3_model = turtlebot3_model
+        super().__init__(turtlebot3_model)
+        # self.turtlebot3_model = turtlebot3_model
         # publishing topic name: cmd_vel
         self.publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         self.twist = Twist()

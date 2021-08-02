@@ -40,11 +40,12 @@ else:
   import termios
 import random
 import time
-from DA_agent import Agent
+# from DA_agent import *
 
-class AgentMove(Agent):
+class AgentMove():
     def __init__(self, turtlebot3_model):
-        super().__init__(turtlebot3_model)
+        self.turtlebot3_model = turtlebot3_model
+        # super().__init__(turtlebot3_model)
         # self.turtlebot3_model = turtlebot3_model
         # publishing topic name: cmd_vel
         self.publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
@@ -76,11 +77,11 @@ class AgentMove(Agent):
         w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
         a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
         space key, s : force stop
-        CTRL-C to quit
+        CTRL-C to quit\n
         """
 
         self.e = """
-        Communications Failed
+        Communications Failed\n
         """
 
         
@@ -295,7 +296,7 @@ if __name__ == "__main__":
 
     finally:
         Robot.terminator()
-        print("Warning : Teleoperation Shutdown!")
+        print("Warning : Teleoperation Shutdown!\n")
         Robot.AgentPublish()
 
     if os.name != 'nt':

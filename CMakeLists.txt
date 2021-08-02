@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  turtlebot3_msgs
   message_generation
 )
 
@@ -76,6 +77,7 @@ generate_messages(
   geometry_msgs
   sensor_msgs
   std_msgs
+  turtlebot3_msgs
 )
 
 ################################################

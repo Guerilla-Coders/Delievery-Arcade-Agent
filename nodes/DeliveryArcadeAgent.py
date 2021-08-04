@@ -8,7 +8,7 @@ import tty
 import termios
 from da_pkg.consts import Limits
 from da_pkg.physics_processing import make_simple_profile, constrain
-from da_pkg.NetworkConfig import NetworkConfig
+from da_pkg.network_config import NetworkConfig
 
 
 def get_key():

@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 import sys
+import os
 import select
 import tty
 import termios
@@ -121,8 +122,14 @@ class DeliveryArcadeAgent:
 
 if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
-    network_config = NetworkConfig("./Delivery-Arcade-Agent/nodes/network_config.json")
-    rospy.loginfo(f"Control server URI: http://{network_config.ip}:{network_config.ports.control}")
+
+    node_dir = os.path.dirname(__file__)
+    config_file_path = "network_config.json"
+    abs_config_file_path = os.path.join(node_dir, config_file_path)
+
+    print(f"Loading network config file from {abs_config_file_path}")
+    network_config = NetworkConfig(abs_config_file_path)
+    print(f"Control server URI: http://{network_config.ip}:{network_config.ports.control}")
 
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()

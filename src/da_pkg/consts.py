@@ -1,8 +1,3 @@
-import rospy
-
-rospy.loginfo("Imported consts.py")
-
-
 class Limits:
     BURGER_MAX_LIN_VEL = 0.22
     BURGER_MAX_ANG_VEL = 2.84

@@ -8,6 +8,7 @@ import tty
 import termios
 from da_pkg.consts import Limits
 from da_pkg.physics_processing import make_simple_profile, constrain
+from da_pkg.NetworkConfig import NetworkConfig
 
 
 def get_key():
@@ -120,6 +121,8 @@ class DeliveryArcadeAgent:
 
 if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
+    network_config = NetworkConfig("./Delivery-Arcade-Agent/nodes/network_config.json")
+    rospy.loginfo(f"Control server URI: http://{network_config.ip}:{network_config.ports.control}")
 
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()

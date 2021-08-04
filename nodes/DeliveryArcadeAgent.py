@@ -26,6 +26,9 @@ class DeliveryArcadeAgent:
     def __init__(self):
         # publishing topic name: cmd_vel
         self.publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+        # Node name configuration
+        rospy.init_node('turtlebot3_teleop')
+        rospy.loginfo(f"Initialized node: turtlebot3_teleop")
         self.twist = Twist()
 
         self.target_linear_vel = 0.0
@@ -35,7 +38,7 @@ class DeliveryArcadeAgent:
 
     def get_vels(self):
         """Return current target linear / angular velocities"""
-        return "currently:\tlinear vel %s\t angular vel %s \n" % (self.target_linear_vel, self.target_angular_vel)
+        return f"currently:\tlinear vel {self.target_linear_vel}\t angular vel {self.target_angular_vel}"
 
     """
     BEWARE OF VELOCITY CONCEPTS!
@@ -117,13 +120,6 @@ class DeliveryArcadeAgent:
 
 if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
-
-    # Node name configuration
-    rospy.init_node('turtlebot3_teleop')
-    rospy.loginfo(f"Initialized node: turtlebot3_teleop")
-
-    # Agent model_name configuration
-    turtlebot3_model = rospy.get_param("model", "waffle_pi")
 
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()

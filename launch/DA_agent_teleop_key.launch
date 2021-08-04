@@ -3,6 +3,6 @@
   <param name="model" value="$(arg model)"/>
 
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
-  <node pkg="da_pkg" type="DeliveryArcadeAgent.py" name="DA_Agent_SocketIO"  output="screen">
+  <node pkg="da_pkg" type="socketio_relay.py" name="DA_Agent_SocketIO"  output="screen">
   </node>
 </launch>

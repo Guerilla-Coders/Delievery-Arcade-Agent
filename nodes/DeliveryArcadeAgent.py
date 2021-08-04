@@ -33,25 +33,6 @@ class DeliveryArcadeAgent:
         self.target_angular_vel = 0.0
         self.control_angular_vel = 0.0
 
-        self.status = 0
-
-        self.msg = """
-        Control Your TurtleBot3!
-        ---------------------------
-        Moving around:
-            w
-        a    s    d
-            x
-        w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
-        a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
-        space key, s : force stop
-        CTRL-C to quit\n
-        """
-
-        self.e = """
-        Communications Failed\n
-        """
-
     def get_vels(self):
         """Return current target linear / angular velocities"""
         return "currently:\tlinear vel %s\t angular vel %s \n" % (self.target_linear_vel, self.target_angular_vel)
@@ -143,15 +124,16 @@ if __name__ == "__main__":
 
     # Node name configuration
     rospy.init_node('turtlebot3_teleop')
+    rospy.loginfo(f"Initialized node: turtlebot3_teleop")
 
     # Agent model_name configuration
     turtlebot3_model = rospy.get_param("model", "waffle_pi")
 
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()
+    rospy.loginfo("Created DeliveryArcadeAgent()")
 
     try:
-        print(Robot.msg)
         while True:
             # get keyboard input
             key = get_key()
@@ -168,11 +150,6 @@ if __name__ == "__main__":
             elif key == '\x03':
                 break
 
-            # print msg per 20 inputs and initialize
-            if Robot.status == 20:
-                print(Robot.msg)
-                Robot.status = 0
-
             # set final control linear and angular velocities
             Robot.control_linear_vel = make_simple_profile(Robot.control_linear_vel, Robot.target_linear_vel,
                                                            (Limits.LIN_VEL_STEP_SIZE / 2.0))
@@ -187,7 +164,6 @@ if __name__ == "__main__":
 
     except BaseException as error:
         print(f"Exception {error}")
-        print(Robot.e)
 
     finally:
         Robot.terminator()

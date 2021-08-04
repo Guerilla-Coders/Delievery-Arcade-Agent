@@ -49,14 +49,12 @@ class DeliveryArcadeAgent:
         """Positive Linear Velocity Increment"""
         raw_target_linear_vel = self.target_linear_vel + Limits.LIN_VEL_STEP_SIZE
         self.target_linear_vel = constrain(raw_target_linear_vel, -Limits.WAFFLE_MAX_LIN_VEL, Limits.WAFFLE_MAX_LIN_VEL)
-        self.status += 1
         print(self.get_vels())
 
     def add_back_velocity(self):
         """Negative Linear Velocity Increment"""
         raw_target_linear_vel = self.target_linear_vel - Limits.LIN_VEL_STEP_SIZE
         self.target_linear_vel = constrain(raw_target_linear_vel, -Limits.WAFFLE_MAX_LIN_VEL, Limits.WAFFLE_MAX_LIN_VEL)
-        self.status += 1
         print(self.get_vels())
 
     def stop(self, gradually=False):
@@ -77,7 +75,6 @@ class DeliveryArcadeAgent:
         raw_target_angular_vel = self.target_angular_vel + Limits.ANG_VEL_STEP_SIZE
         self.target_angular_vel = constrain(raw_target_angular_vel, -Limits.WAFFLE_MAX_ANG_VEL,
                                             Limits.WAFFLE_MAX_ANG_VEL)
-        self.status = self.status + 1
         print(self.get_vels())
 
     def add_CW_velocity(self):
@@ -85,7 +82,6 @@ class DeliveryArcadeAgent:
         raw_target_angular_vel = self.target_angular_vel - Limits.ANG_VEL_STEP_SIZE
         self.target_angular_vel = constrain(raw_target_angular_vel, -Limits.WAFFLE_MAX_ANG_VEL,
                                             Limits.WAFFLE_MAX_ANG_VEL)
-        self.status = self.status + 1
         print(self.get_vels())
 
     def do_publishing(self):

@@ -6,8 +6,8 @@ import sys
 import select
 import tty
 import termios
-from consts import Limits
-from physics_processing import make_simple_profile, constrain
+from src.da_pkg.consts import Limits
+from src.da_pkg.physics_processing import make_simple_profile, constrain
 
 
 def get_key():

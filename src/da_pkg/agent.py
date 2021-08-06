@@ -1,7 +1,7 @@
 import rospy
 from geometry_msgs.msg import Twist
-from da_pkg.consts import Limits
-from da_pkg.physics_processing import constrain
+from .consts import Limits
+from .physics_processing import constrain
 
 
 class DeliveryArcadeAgent:

@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     for i, line in enumerate(bashrc_data):
         if TARGET_PHRASE in line:
-            new_line = f"{TARGET_PHRASE}=http://{server_ip}:11311/"
+            new_line = f"export {TARGET_PHRASE}=http://{server_ip}:11311/"
             print(f"Found {line[:-1]} in line number {i}. Replacing to {new_line}")
             bashrc_data[i] = new_line + "\n"
 

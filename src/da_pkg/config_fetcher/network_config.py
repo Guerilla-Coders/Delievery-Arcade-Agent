@@ -1,4 +1,3 @@
-import json
 from dataclasses import dataclass
 
 
@@ -25,8 +24,8 @@ class NetworkConfig:
     secret_key: str
     ports: Ports
 
-    def __init__(self, config_file_path: str):
-        self.config = json.load(open(config_file_path, "r"))
+    def __init__(self, config: dict):
+        self.config = config
 
         self.ip = self.config["server"]["ip"]
         self.secret_key = self.config["server"]["secret_key"]

@@ -7,7 +7,8 @@ import os
 import select
 import tty
 import termios
-from da_pkg.network_config import NetworkConfig
+from da_pkg.config_fetcher.config_fetcher import fetch_config
+from da_pkg.config_fetcher.network_config import NetworkConfig
 from da_pkg.consts import Limits
 from da_pkg.physics_processing import make_simple_profile
 from da_pkg.agent import DeliveryArcadeAgent
@@ -29,11 +30,8 @@ if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
 
     node_dir = os.path.dirname(__file__)
-    config_file_path = "network_config.json"
-    abs_config_file_path = os.path.join(node_dir, config_file_path)
 
-    print(f"Loading network config file from {abs_config_file_path}")
-    network_config = NetworkConfig(abs_config_file_path)
+    network_config = NetworkConfig(fetch_config("server"))
     print(f"Control server URI: http://{network_config.ip}:{network_config.ports.control}")
 
     # DeliveryArcadeAgent instance generated

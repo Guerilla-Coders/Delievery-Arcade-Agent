@@ -1,7 +1,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from .consts import Limits
-from .physics_processing import constrain
+from .physics_processing import constrain, make_simple_profile
 
 
 class DeliveryArcadeAgent:
@@ -92,3 +92,17 @@ class DeliveryArcadeAgent:
         self.twist.angular.x = 0.0
         self.twist.angular.y = 0.0
         self.twist.angular.z = 0.0
+
+    def run(self):
+        rospy.logdebug(f"ROBOT RUN")
+        # set final control linear and angular velocities
+        self.control_linear_vel = make_simple_profile(self.control_linear_vel, self.target_linear_vel,
+                                                      (Limits.LIN_VEL_STEP_SIZE / 2.0))
+        self.control_angular_vel = make_simple_profile(self.control_angular_vel, self.target_angular_vel,
+                                                       (Limits.ANG_VEL_STEP_SIZE / 2.0))
+
+        # formulate twist msg
+        self.make_twist_data()
+
+        # publish twist via 'cmd_vel' topic
+        self.do_publishing()

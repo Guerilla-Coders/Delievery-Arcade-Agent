@@ -1,20 +1,22 @@
 def make_simple_profile(current, target, slop):
     """
-    current : control_vel
-    target : target_vel
-    ??? : For more subtle control?
+    target 값에 서서히 다가가기 위한 전처리 함수
+
+    :param current: 현재 값
+    :param target: 목표 값
+    :param slop: '서서히'의 최소 범위
+    :return: 목표 값에 서서히 다가간 변화값
     """
     if target > current:
-        # target is bigger than current
-        current = min(target, current + slop)
+        # 목표 값: 증가
+        # 변화량이 slop보다 크면 slop만큼만 더해서 리턴, slop보다 작으면 타겟을 그대로 리턴
+        return min(target, current + slop)
 
     elif target < current:
-        # target is smaller than current
-        current = max(target, current - slop)
+        # 목표 값: 감소
+        return max(target, current - slop)
     else:
-        current = target
-
-    return current
+        return target
 
 
 def constrain(origin, low, high):

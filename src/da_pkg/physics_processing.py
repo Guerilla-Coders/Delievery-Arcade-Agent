@@ -26,3 +26,7 @@ def constrain(origin, low, high):
     elif origin > high:
         return high
     return origin
+
+
+def map_number(origin, min1, max1, min2, max2):
+    return ((origin - min1) / (max1 - min1)) * (max2 - min2) + min2

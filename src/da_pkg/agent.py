@@ -18,6 +18,11 @@ class DeliveryArcadeAgent:
         self.target_angular_vel = 0.0
         self.control_angular_vel = 0.0
 
+        self.last_target_linear_vel = 0.0
+        self.last_control_linear_vel = 0.0
+        self.last_target_angular_vel = 0.0
+        self.last_control_angular_vel = 0.0
+
     def get_vels(self):
         """Return current target linear / angular velocities"""
         return f"currently:\tlinear vel {self.target_linear_vel}\t angular vel {self.target_angular_vel}"
@@ -94,7 +99,16 @@ class DeliveryArcadeAgent:
         self.twist.angular.z = 0.0
 
     def run(self):
-        rospy.logdebug(f"ROBOT RUN")
+        if self.target_linear_vel != self.last_target_linear_vel or \
+                self.target_angular_vel != self.last_target_angular_vel or \
+                self.control_linear_vel != self.last_control_linear_vel or \
+                self.control_angular_vel != self.last_control_angular_vel:
+            rospy.logdebug(f"TARGET {self.target_linear_vel} {self.target_angular_vel}")
+            rospy.logdebug(f"CONTROL {self.control_linear_vel} {self.control_angular_vel}")
+            self.last_target_linear_vel = self.target_linear_vel
+            self.last_target_angular_vel = self.target_angular_vel
+            self.last_control_linear_vel = self.control_linear_vel
+            self.last_control_angular_vel = self.control_angular_vel
         # set final control linear and angular velocities
         self.control_linear_vel = make_simple_profile(self.control_linear_vel, self.target_linear_vel,
                                                       (Limits.LIN_VEL_STEP_SIZE / 2.0))

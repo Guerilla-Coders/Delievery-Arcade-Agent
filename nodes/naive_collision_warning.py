@@ -16,13 +16,13 @@ def callback(dt):
     if dt.ranges[0]>thr1 and dt.ranges[15]>thr2 and dt.ranges[345]>thr2: 
         pass
     if dt.ranges[0]<0.1 and dt.ranges[15]<0.1 and dt.ranges[345]<0.1:
-        print("Warning: Emergency Stop!")
+        rospy.loginfo("Warning: Emergency Stop!")
         move.linear.x = 0
         move.linear.y = 0
         move.angular.z = 0
         pub.publish(move) 
     else:
-        print("Warning: Collision Alert!")
+        rospy.loginfo("Warning: Collision Alert!")
 
 move = Twist()
 rospy.init_node('obstacle_warning_node')

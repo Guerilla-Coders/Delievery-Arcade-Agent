@@ -167,8 +167,10 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  nodes/DA_agent.py
+  nodes/DA_agent_obstacle.py
   nodes/DA_agent_move.py
+  nodes/naive_collision_warning.py
+  nodes/agent_state.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

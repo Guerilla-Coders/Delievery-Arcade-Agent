@@ -15,7 +15,7 @@ MIN_THRESHOLD = 0
 class Obstacle():
     def __init__(self):
         self.obstacle_publisher = rospy.Publisher('obstacle_boolean', Bool, queue_size = 1)
-        # rate = rospy.Rate(5)
+        # self.rate = rospy.Rate(5)
         rospy.init_node('obstacle_warner')
         self.Bool = False
 
@@ -50,23 +50,19 @@ class Obstacle():
         
         return scan_filter
 
-    # def emergency_stop(self):
-    #     twist.linear.x = 0.0
-    #     twist.angular.z = 0.0
-    #     self._cmd_pub.publish(twist)
-    #     turtlebot_moving = False
-    #     rospy.loginfo('Stop!')
-
-    def do_publish(boolean):
+    def do_publish(self,boolean):
         self.obstacle_publisher.publish(boolean)
+        # self.do_sleep()
+    
+    def do_sleep(self):
+        self.rate.sleep()
     
     def obstacle(self):
         lidar_distances = self.get_scan()
         min_distance = min(lidar_distances)
 
         elif min_distance < WARNING_DISTANCE:
-            if turtlebot_moving:
-                self.Bool = True
+            self.Bool = True
         else:
             self.Bool = False
         self.do_publish(self.Bool)

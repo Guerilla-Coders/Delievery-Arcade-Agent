@@ -5,6 +5,8 @@
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
   <node pkg="da_pkg" type="DA_agent_move.py" name="DA_agent_teleop_keyboard"  output="screen">
   </node>
-  <node pkg="da_pkg" type="DA_agent.py" name="DA_agent_core"  output="screen">
+  <node pkg="da_pkg" type="agent_state.py" name="DA_Agent_State_Manager"  output="screen">
+  </node>
+  <node pkg="da_pkg" type="DA_agent_obstacle" name="Obstacle_Teller"  output="screen">
   </node>
 </launch>

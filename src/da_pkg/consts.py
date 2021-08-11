@@ -1,7 +1,4 @@
 class Limits:
-    BURGER_MAX_LIN_VEL = 0.22
-    BURGER_MAX_ANG_VEL = 2.84
-
     WAFFLE_MAX_LIN_VEL = 0.26
     WAFFLE_MAX_ANG_VEL = 1.82
 

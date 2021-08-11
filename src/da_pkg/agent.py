@@ -1,7 +1,7 @@
 import rospy
 from geometry_msgs.msg import Twist
-from da_pkg.consts import Limits
-from da_pkg.physics_processing import constrain
+from .consts import Limits
+from .physics_processing import constrain, make_simple_profile
 
 
 class DeliveryArcadeAgent:
@@ -17,6 +17,11 @@ class DeliveryArcadeAgent:
         self.control_linear_vel = 0.0
         self.target_angular_vel = 0.0
         self.control_angular_vel = 0.0
+
+        self.last_target_linear_vel = 0.0
+        self.last_control_linear_vel = 0.0
+        self.last_target_angular_vel = 0.0
+        self.last_control_angular_vel = 0.0
 
     def get_vels(self):
         """Return current target linear / angular velocities"""
@@ -92,3 +97,26 @@ class DeliveryArcadeAgent:
         self.twist.angular.x = 0.0
         self.twist.angular.y = 0.0
         self.twist.angular.z = 0.0
+
+    def run(self):
+        if self.target_linear_vel != self.last_target_linear_vel or \
+                self.target_angular_vel != self.last_target_angular_vel or \
+                self.control_linear_vel != self.last_control_linear_vel or \
+                self.control_angular_vel != self.last_control_angular_vel:
+            rospy.logdebug(f"TARGET {self.target_linear_vel} {self.target_angular_vel}")
+            rospy.logdebug(f"CONTROL {self.control_linear_vel} {self.control_angular_vel}")
+            self.last_target_linear_vel = self.target_linear_vel
+            self.last_target_angular_vel = self.target_angular_vel
+            self.last_control_linear_vel = self.control_linear_vel
+            self.last_control_angular_vel = self.control_angular_vel
+        # set final control linear and angular velocities
+        self.control_linear_vel = make_simple_profile(self.control_linear_vel, self.target_linear_vel,
+                                                      (Limits.LIN_VEL_STEP_SIZE / 2.0))
+        self.control_angular_vel = make_simple_profile(self.control_angular_vel, self.target_angular_vel,
+                                                       (Limits.ANG_VEL_STEP_SIZE / 2.0))
+
+        # formulate twist msg
+        self.make_twist_data()
+
+        # publish twist via 'cmd_vel' topic
+        self.do_publishing()

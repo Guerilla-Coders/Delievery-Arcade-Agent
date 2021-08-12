@@ -9,6 +9,13 @@ class DeliveryArcadeAgent_State():
         rospy.init_node('DeliveryArcadeAgent_State')
         rospy.loginfo("Initialized node: DelieveryArcadeAgent_State")
         
+        self.battery = DeliveryArcadeAgent_Battery()
+        self.obstacle = DeliveryArcadeAgent_Obstacle()
+
+
+
+class DeliveryArcadeAgent_Battery:
+    def __init__(self):
         """
         FOR TEST : subscriber should not be done like this!
         """
@@ -16,12 +23,9 @@ class DeliveryArcadeAgent_State():
         self.battery_state = True
         self.battery_percentage = 0.0
 
-        # self.obstacle_subscriber = self.obstacle_state_listener()
-        self.obstacle_state = None
-
-    def battery_callback(self,data):
-        print(data)
-        print('\n')
+     def battery_callback(self,data):
+        # print(data)
+        # print('\n')
         # print(data.battery) #12.59000 -> BatteryState.voltage
         self.battery_percentage = data.percentage
         if self.battery_percentage < 0.05:
@@ -37,21 +41,32 @@ class DeliveryArcadeAgent_State():
         # rospy.Subscriber('topic_name', msg_type, callback)
         rospy.spin()
 
-
     def is_battery_okay(self) -> bool:
-        self.battery_state = callback(data)
         return self.battery_state
+
+    def run(self):
+        self.battery_state_listener()
+        return self.is_battery_okay()
+
+
+
+class DeliveryArcadeAgent_Obstacle:
+    def __init__(self):
+        self.obstacle_state = True
 
     def obstacle_state_listener(self):
         rospy.Subscriber('obstacle_boolean', Bool, self.obstacle_callback)
 
     def obstacle_callback(self, obstacle):
         if obstacle:
-            rospy.loginfo("Warning : Potential obstacle is near!")        
+            rospy.loginfo("Warning : Potential obstacle is near!")
+            self.obstacle_state = False        
         else:
-            pass
-    
+            self.obstacle_state = True
 
-if __name__ == '__main__':
-    battery_state_listener()
-    # callback()
+    def is_obstacle_okay(self)->bool:
+        return self.obstacle_state
+
+    def run(self):
+        self.obstacle_state_listener
+        return self.is_obstacle_okay

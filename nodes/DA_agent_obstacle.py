@@ -12,7 +12,7 @@ WARNING_DISTANCE = 0.5
 MAX_THRESHOLD = 3.5
 MIN_THRESHOLD = 0
 
-class Obstacle():
+class ObstacleDetector():
     def __init__(self):
         self.obstacle_publisher = rospy.Publisher('obstacle_boolean', Bool, queue_size = 1)
         # self.rate = rospy.Rate(5)
@@ -65,13 +65,14 @@ class Obstacle():
             self.Bool = True
         else:
             self.Bool = False
+            
         self.do_publish(self.Bool)
 
     
 
 def main():
     try:
-        obstacle_warner = Obstacle()
+        obstacle_warner = ObstacleDetector()
         obstacle_warner.obstacle()
     except rospy.ROSInterruptException:
         pass

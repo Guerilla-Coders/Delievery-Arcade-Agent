@@ -51,7 +51,7 @@ if __name__ == "__main__":
         if not Battery.run():
             cnt+=1
             if cnt > 1000:
-                print(f"Warning : Your battery left ->{Battery.battery_percentage*100}%")
+                print(f"Warning : Your battery left -> {Battery.battery_percentage*100}%")
                 cnt = 0
 
 

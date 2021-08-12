@@ -70,3 +70,7 @@ class DeliveryArcadeAgent_Obstacle:
     def run(self):
         self.obstacle_state_listener
         return self.is_obstacle_okay
+
+if __name__ == "__main__":
+    RobotState = DeliveryArcadeAgent_State()
+    RobotState.obstacle.run()

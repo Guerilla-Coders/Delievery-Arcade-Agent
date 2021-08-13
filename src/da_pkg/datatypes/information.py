@@ -1,11 +1,24 @@
 from dataclasses import dataclass
 
+# Remember : float[9] data is covariance
 information_example = {
     'type': 'info',
     'info': {
-        'battery_bool': True,  # boolean
-        'battery_percentage' : 15, # 0~100
-        'obstacle_bool': True  # boolean
+        'battery_percentage' : 0, # 0~100
+        'obstacle_bool': True , # boolean,
+        'imu' : {
+            'quaternion_orientation' : [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0], # float[9]
+            'angular_velocity' : [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0], # float[9]
+            'linear_acceleration' : [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] # float[9]
+        },
+        'magnetic_field' : {
+            'magnetic_field' : {
+                'x' : 0.0,
+                'y' : 0.0,
+                'z' : 0.0
+            },
+            'magnetic_field_covariance' : [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] # float[9]
+        }
     }
 }
 

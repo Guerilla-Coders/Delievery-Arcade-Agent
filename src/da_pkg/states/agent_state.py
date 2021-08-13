@@ -25,6 +25,8 @@ class DeliveryArcadeAgent_Battery:
         # self.battery_subscriber = self.battery_state_listener() 
         self.battery_state = True
         self.battery_percentage = 0.0
+        rospy.init_node('DeliveryArcadeAgent_Battery')
+
 
     def battery_callback(self,data):
         # print(data)
@@ -42,7 +44,7 @@ class DeliveryArcadeAgent_Battery:
     def battery_state_listener(self):   
         rospy.Subscriber('battery_state', BatteryState, self.battery_callback)
         # rospy.Subscriber('topic_name', msg_type, callback)
-        rospy.spin()
+        # rospy.spin()
 
     def is_battery_okay(self) -> bool:
         return self.battery_state
@@ -80,8 +82,11 @@ class DeliveryArcadeAgent_Obstacle:
 
 if __name__ == "__main__":
     try:
-        RobotState = DeliveryArcadeAgent_State()
-        RobotState.battery.run()
+        # RobotState = DeliveryArcadeAgent_State()
+        # RobotState.battery.run()
+
+        RobotBattery = DeliveryArcadeAgent_Battery()
+        RobotBattery.run()
     except KeyboardInterrupt:
         pass
     except exception as e:

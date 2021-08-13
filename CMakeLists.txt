@@ -171,7 +171,7 @@ catkin_install_python(PROGRAMS
   src/socketio_relay.py
   src/da_pkg/states/obstacle_detector.py
   src/da_pkg/states/agent_state.py
-  src/da_pkg/states/battery_state_checker.py
+  src/da_pkg/states/topic_checker.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

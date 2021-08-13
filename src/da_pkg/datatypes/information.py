@@ -18,6 +18,9 @@ information_example = {
                 'z' : 0.0
             },
             'magnetic_field_covariance' : [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] # float[9]
+        },
+        'laser_scan' : {
+            
         }
     }
 }

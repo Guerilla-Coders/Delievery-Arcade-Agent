@@ -169,6 +169,8 @@ include_directories(
 catkin_install_python(PROGRAMS
 #   nodes/socketio_relay.py
   src/socketio_relay.py
+  src/da_pkg/states/obstacle_detector.py
+  src/da_pkg/states/agent_state.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

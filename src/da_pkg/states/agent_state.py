@@ -6,18 +6,16 @@ from turtlebot3_msgs.msg import SensorState
 from std_msgs.msg import Bool
 
 
-class DeliveryArcadeAgent_State():
+class DeliveryArcadeAgentState:
     def __init__(self):
         rospy.init_node('DeliveryArcadeAgent_State')
         rospy.loginfo("Initialized node: DelieveryArcadeAgent_State")
-        
-        self.battery = DeliveryArcadeAgent_Battery()
-        self.obstacle = DeliveryArcadeAgent_Obstacle()
-        
+
+        self.battery = DeliveryArcadeAgentBattery()
+        self.obstacle = DeliveryArcadeAgentObstacle()
 
 
-
-class DeliveryArcadeAgent_Battery:
+class DeliveryArcadeAgentBattery:
     def __init__(self):
         """
         FOR TEST : subscriber should not be done like this!
@@ -27,21 +25,22 @@ class DeliveryArcadeAgent_Battery:
         self.battery_percentage = 0.0
         rospy.init_node('DeliveryArcadeAgent_Battery')
 
-
-    def battery_callback(self,data):
+    def battery_callback(self, data):
         # print(data)
         # print('\n')
         # print(data.battery) #12.59000 -> BatteryState.voltage
         self.battery_percentage = data.percentage
         if self.battery_percentage < 0.05:
             self.battery_state = False
-            rospy.loginfo(f"Warning : Battery is under {self.battery_percentage*100}%\n Please charge your battery immediately!")
-        
+            rospy.loginfo(
+                f"Warning : Battery is under {self.battery_percentage * 100}%\n"
+                f"Please charge your battery immediately!")
+
         elif self.battery_percentage <= 0.15:
             self.battery_state = False
-            rospy.loginfo(f"Warning : Battery is under {self.battery_percentage*100}%")
+            rospy.loginfo(f"Warning : Battery is under {self.battery_percentage * 100}%")
 
-    def battery_state_listener(self):   
+    def battery_state_listener(self):
         rospy.Subscriber('battery_state', BatteryState, self.battery_callback)
         # rospy.Subscriber('topic_name', msg_type, callback)
         # rospy.spin()
@@ -58,8 +57,7 @@ class DeliveryArcadeAgent_Battery:
         rospy.loginfo(self.battery_percentage)
 
 
-
-class DeliveryArcadeAgent_Obstacle:
+class DeliveryArcadeAgentObstacle:
     def __init__(self):
         self.obstacle_state = True
 
@@ -69,23 +67,24 @@ class DeliveryArcadeAgent_Obstacle:
     def obstacle_callback(self, obstacle):
         if obstacle.data:
             rospy.loginfo("Warning : Potential obstacle is near!")
-            self.obstacle_state = False        
+            self.obstacle_state = False
         else:
             self.obstacle_state = True
 
-    def is_obstacle_okay(self)->bool:
+    def is_obstacle_okay(self) -> bool:
         return self.obstacle_state
 
     def run(self):
-        self.obstacle_state_listener
+        self.obstacle_state_listener()
         return self.is_obstacle_okay
+
 
 if __name__ == "__main__":
     try:
         # RobotState = DeliveryArcadeAgent_State()
         # RobotState.battery.run()
 
-        RobotBattery = DeliveryArcadeAgent_Battery()
+        RobotBattery = DeliveryArcadeAgentBattery()
         RobotBattery.run()
     except KeyboardInterrupt:
         pass

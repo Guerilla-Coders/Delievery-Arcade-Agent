@@ -10,12 +10,11 @@ from da_pkg.consts import Limits
 from da_pkg.agent import DeliveryArcadeAgent
 from da_pkg.datatypes.commands import Movement
 
-from da_pkg.states.agent_state import DeliveryArcadeAgent_State
+from da_pkg.states.agent_state import DeliveryArcadeAgentState
 from da_pkg.states.obstacle_detector import ObstacleDetector
 from da_pkg.datatypes.information import Battery, LidarScan
 
 sio = socketio.Client()
-
 
 if __name__ == "__main__":
     network_config = NetworkConfig(fetch_config("server"))
@@ -24,8 +23,7 @@ if __name__ == "__main__":
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()
     ScaredLidarScan = ObstacleDetector()
-    Robot_State = DeliveryArcadeAgent_State()
-    
+    Robot_State = DeliveryArcadeAgentState()
 
     rospy.loginfo("Created DeliveryArcadeAgent() and its State object")
 
@@ -49,19 +47,6 @@ if __name__ == "__main__":
                                               Limits.WAFFLE_MAX_ANG_VEL, -Limits.WAFFLE_MAX_ANG_VEL)
         rospy.loginfo(f'Received command from server. data: {command}')
 
-    @sio.on('info', namespace='/agent')
-    def receive_battery(data):
-        # info = Battery(data)
-        if data <= 15:
-            rospy.loginfo('Warning : LOW BATTERY WARNING!')
-        rospy.loginfo(f'Current Battery: {data}%')
-
-    @sio.on('info', namespace='/agent')
-    def receive_obstacle_bool(data):
-        if data:
-            rospy.loginfo(f'Current obstacle status: {data}')
-        else:
-            rospy.loginfo('Warning : POTENTIAL COLLISION ALERT!')
 
     @sio.event
     def disconnect():
@@ -77,8 +62,6 @@ if __name__ == "__main__":
 
             sio.emit('info', battery_percentage, '/agent')
             sio.emit('info', obstacle_bool, '/agent')
-            
-
 
 
     try:

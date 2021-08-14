@@ -4,7 +4,7 @@ from dataclasses import dataclass
 information_example = {
     'type': 'information',
     'info': {
-        'battery_percentage': 0,  # 0~100
+        'battery_percentage': 0.0,  # 0~100
         'obstacle_detected': True,  # boolean,
         'imu': {
             'quaternion_orientation': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],  # float[9]
@@ -18,9 +18,6 @@ information_example = {
                 'z': 0.0
             },
             'magnetic_field_covariance': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  # float[9]
-        },
-        'laser_scan' : {
-            
         }
     }
 }
@@ -55,12 +52,3 @@ class Information:
             'magnetic_field': self.magnetic_field
         }
         yield 'info', payload
-
-
-@dataclass
-class LidarScan:
-    obstacle_bool: bool
-
-    def __init__(self, *data):
-        # assert type(obstacle_bool) == bool
-        pass

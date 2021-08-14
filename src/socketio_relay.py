@@ -5,14 +5,8 @@ from rospy.exceptions import ROSException
 import socketio
 from da_pkg.config_fetcher.config_fetcher import fetch_config
 from da_pkg.config_fetcher.network_config import NetworkConfig
-from da_pkg.physics_processing import map_number
-from da_pkg.consts import Limits
-from da_pkg.agent import DeliveryArcadeAgent
+from da_pkg.agent import DeliveryArcadeAgent, FREQUENT, OFTEN, RARELY
 from da_pkg.datatypes.commands import Movement
-
-from da_pkg.states.agent_state import DeliveryArcadeAgentState
-from da_pkg.states.obstacle_detector import ObstacleDetector
-from da_pkg.datatypes.information import Battery, LidarScan
 
 sio = socketio.Client()
 
@@ -22,8 +16,6 @@ if __name__ == "__main__":
 
     # DeliveryArcadeAgent instance generated
     Robot = DeliveryArcadeAgent()
-    ScaredLidarScan = ObstacleDetector()
-    Robot_State = DeliveryArcadeAgentState()
 
     rospy.loginfo("Created DeliveryArcadeAgent() and its State object")
 
@@ -41,10 +33,7 @@ if __name__ == "__main__":
     @sio.on('command', namespace='/agent')
     def receive_command(data):
         command = Movement(data)
-        Robot.target_linear_vel = map_number(command.throttle, -32, 32,
-                                             -Limits.WAFFLE_MAX_LIN_VEL, Limits.WAFFLE_MAX_LIN_VEL)
-        Robot.target_angular_vel = map_number(command.steer, -32, 32,
-                                              Limits.WAFFLE_MAX_ANG_VEL, -Limits.WAFFLE_MAX_ANG_VEL)
+        Robot.movement_publisher.set_movement(command)
         rospy.loginfo(f'Received command from server. data: {command}')
 
 
@@ -55,13 +44,8 @@ if __name__ == "__main__":
 
     def run_robot_forever():
         while True:
-            Robot.run()
-            ScaredLidarScan.run()
-            battery_percentage = Robot_State.battery.run()
-            obstacle_bool = Robot_State.obstacle.run()
-
-            sio.emit('info', battery_percentage, '/agent')
-            sio.emit('info', obstacle_bool, '/agent')
+            output = Robot.run()
+            [sio.emit('info', dict(data), namespace='/agent') for data in output if data is not None]
 
 
     try:
@@ -74,6 +58,5 @@ if __name__ == "__main__":
         print(f"{error}")
 
     finally:
-        Robot.terminator()
+        Robot.terminate()
         print("Warning : Teleoperation Shutdown!\n")
-        Robot.do_publishing()

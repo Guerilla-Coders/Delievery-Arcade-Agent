@@ -24,7 +24,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -112,7 +112,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES da_pkg
-#  CATKIN_DEPENDS geometry_msgs roscpp rospy sensor_msgs std_msgs
+  CATKIN_DEPENDS geometry_msgs roscpp rospy sensor_msgs std_msgs
 #  DEPENDS system_lib
 )
 
@@ -167,10 +167,11 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  nodes/agent_state.py
-  nodes/DA_agent_obstacle.py
-  nodes/DA_agent_move.py
-  nodes/naive_collision_warning.py
+#   nodes/socketio_relay.py
+  src/socketio_relay.py
+  src/da_pkg/states/obstacle_detector.py
+  src/da_pkg/states/agent_state.py
+  src/da_pkg/states/topic_checker.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

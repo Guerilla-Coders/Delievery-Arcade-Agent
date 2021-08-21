@@ -48,6 +48,7 @@ if __name__ == "__main__":
             [sio.emit('info', dict(data), namespace='/agent') for data in output if data is not None]
 
 
+
     try:
         sio.connect(f'http://{network_config.ip}:{network_config.ports.control}', namespaces=["/agent"])
         task = sio.start_background_task(run_robot_forever)

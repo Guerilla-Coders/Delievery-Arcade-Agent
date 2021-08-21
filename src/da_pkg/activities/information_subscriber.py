@@ -2,6 +2,7 @@ import rospy
 import math
 from ..datatypes.information import Information
 from sensor_msgs.msg import LaserScan, BatteryState, Imu, MagneticField
+from geometry_msgs.msg import Vector3, Quaternion
 
 LINEAR_VEL = 0.22
 STOP_DISTANCE = 0.2
@@ -21,9 +22,12 @@ class InformationSubscriber:
         self.min_distance = 0.0
         self.obstacle_state = False
 
-        self.quaternion_orientation = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        self.angular_velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        self.linear_acceleration = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        # self.quaternion_orientation = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.quaternion_orientation = Quaternion()
+        # self.angular_velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.angular_velocity = Vector3()
+        # self.linear_acceleration = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.linear_acceleration = Vector3()
 
         self.magnetic_field_x = 0.0
         self.magnetic_field_y = 0.0
@@ -33,6 +37,8 @@ class InformationSubscriber:
     def fetch_battery_data(self) -> None:
         battery_data: BatteryState = rospy.wait_for_message('battery_state', BatteryState)
         self.battery_voltage = battery_data.voltage
+
+
 
     def fetch_scan_data(self) -> None:
         """return a list that contains information of laser-scanned samples with index of each angles."""
@@ -81,9 +87,9 @@ class InformationSubscriber:
 
     def get_imu_dict(self) -> dict:
         return {
-            'quaternion_orientation': list(self.quaternion_orientation),  # float[9]
-            'angular_velocity': list(self.angular_velocity),  # float[9]
-            'linear_acceleration': list(self.linear_acceleration)  # float[9]
+            'quaternion_orientation': list([self.quaternion_orientation.x, self.quaternion_orientation.y, self.quaternion_orientation.z, self.quaternion_orientation.w]),  # float[4]
+            'angular_velocity': list([self.angular_velocity.x, self.angular_velocity.y, self.angular_velocity.z]),  # float[3]
+            'linear_acceleration': list([self.linear_acceleration.x, self.linear_acceleration.y, self.linear_acceleration.z])  # float[3]
         }
 
     def get_magnetic_dict(self) -> dict:
@@ -98,8 +104,10 @@ class InformationSubscriber:
 
     def get_information(self) -> Information:
         self.fetch_battery_data()
+        self.fetch_magnetic_data()
+        self.fetch_imu_data()
         self.fetch_scan_data()
         information = Information(
-            self.battery_voltage, self.obstacle_state, self.get_magnetic_dict(), self.get_magnetic_dict()
+            self.battery_voltage, self.obstacle_state, self.get_imu_dict(), self.get_magnetic_dict()
         )
         return information

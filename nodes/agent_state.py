@@ -23,7 +23,7 @@ class DeliveryArcadeAgent_Battery:
         self.battery_state = True
         self.battery_percentage = 0.0
 
-     def battery_callback(self,data):
+    def battery_callback(self,data):
         # print(data)
         # print('\n')
         # print(data.battery) #12.59000 -> BatteryState.voltage

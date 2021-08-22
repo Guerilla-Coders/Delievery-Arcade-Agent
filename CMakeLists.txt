@@ -51,11 +51,10 @@ catkin_python_setup()
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-#add_message_files(
-#  FILES
-#   Message1.msg
-#   Message2.msg
-#)
+add_message_files(
+  FILES
+  sound_effects.msg
+)
 
 ## Generate services in the 'srv' folder
 #add_service_files(
@@ -169,9 +168,6 @@ include_directories(
 catkin_install_python(PROGRAMS
 #   nodes/socketio_relay.py
   src/socketio_relay.py
-  src/da_pkg/states/obstacle_detector.py
-  src/da_pkg/states/agent_state.py
-  src/da_pkg/states/topic_checker.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

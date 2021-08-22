@@ -8,11 +8,11 @@ class SoundEffectPublisher:
     """Publish sound_effects msg from server to agent(raspberrypi)"""
     def __init__(self):
         """Ver 1.0 use std_msgs"""
-        # self.publisher = rospy.Publisher('sound', Int64, queue_size=10)
+        # self.publisher = rospy.Publisher('sound_effects', Int64, queue_size=10)
         # self.int64 = Int64()
 
         """Ver 2.0 : use own msg type"""
-        self.publisher = rospy.Publisher('sound', sound_effects, queue_size = 10)
+        self.publisher = rospy.Publisher('sound_effects', sound_effects, queue_size = 10)
         self.sound_effects = sound_effects()
 
         self.mode = SoundEffectsConstants.DEFAULT_MODE

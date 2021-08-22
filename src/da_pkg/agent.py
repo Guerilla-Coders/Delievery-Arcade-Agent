@@ -1,5 +1,6 @@
 from .activities.movement_publisher import MovementPublisher
 from .activities.information_subscriber import InformationSubscriber
+from .activities.sound_effects.sound_effect_publisher import SoundEffectPublisher
 from .datatypes.information import Information
 import time
 
@@ -13,6 +14,8 @@ class DeliveryArcadeAgent:
 
     def __init__(self):
         self.movement_publisher = MovementPublisher()
+        self.sound_effect_publisher = SoundEffectPublisher()
+
         self.information_subscriber = InformationSubscriber()
 
         self.frequent_task_timer = 0
@@ -21,6 +24,7 @@ class DeliveryArcadeAgent:
 
     def run(self) -> tuple:
         self.movement_publisher.run()
+        self.sound_effect_publisher.run()
 
         output = [None, None, None]
 
@@ -40,3 +44,4 @@ class DeliveryArcadeAgent:
 
     def terminate(self):
         self.movement_publisher.terminate()
+        self.sound_effect_publisher.terminate()

@@ -7,6 +7,7 @@ from da_pkg.config_fetcher.config_fetcher import fetch_config
 from da_pkg.config_fetcher.network_config import NetworkConfig
 from da_pkg.agent import DeliveryArcadeAgent, FREQUENT, OFTEN, RARELY
 from da_pkg.datatypes.commands import Movement
+from da_pkg.datatypes.sound_effects import SoundEffect
 
 sio = socketio.Client()
 
@@ -35,6 +36,13 @@ if __name__ == "__main__":
         command = Movement(data)
         Robot.movement_publisher.set_movement(command)
         rospy.loginfo(f'Received command from server. data: {command}')
+
+    @sio.on('sound_effects', namespace='/agent')
+    def receive_sound_effects(data):
+        sound_effects = SoundEffect(data)
+        Robot.sound_effect_publisher.set_soundeffect(sound_effects)
+        rospy.loginfo(f'Received sound_effects from server. data : {sound_effects}')
+
 
 
     @sio.event

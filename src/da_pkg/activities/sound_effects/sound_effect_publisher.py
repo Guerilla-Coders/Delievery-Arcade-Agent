@@ -1,6 +1,6 @@
 import rospy
 # from std_msgs.msg import Int64
-from da_pkg.msg import *
+from da_pkg.msg import sound_effects
 from ...consts import SoundEffectsConstants
 from ...datatypes.sound_effects import SoundEffect
 
@@ -50,6 +50,13 @@ class SoundEffectPublisher:
     #     self.sound_effects.random = soundeffect.random
     #     self.sound_effects.language = soundeffect.language
 
+    def is_msg_going_well(self):
+        self.sound_effects.mode = SoundEffectsConstants.DEFAULT_MODE
+        self.sound_effects.language = SoundEffectsConstants.DEFAULT_LANGUAGE
+        self.sound_effects.random = SoundEffectsConstants.DEFAULT_RANDOM
+        self.do_publishing()
+        # rospy.loginfo(f'sound_effects msg is going well! \n{self.sound_effects}')
+        
     def run(self):
         self.make_sound_effects_data()
         self.do_publishing()

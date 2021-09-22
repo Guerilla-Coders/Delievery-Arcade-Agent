@@ -68,7 +68,7 @@ class SoundEffect:
         refer to consts/SoundEffectsConstants for further details.
         """
         if len(data) == 1 and type(data[0]) is dict:
-            assert data[0]['type'] == 'sound_effect'
+            assert data[0]['type'] == 'command'
             assert 0 <= data[0]['sound_effect']['mode'] <= SoundEffectConstants.FINAL_MODE
             assert 1 <= data[0]['sound_effect']['random'] <= SoundEffectConstants.FINAL_RANDOM
             assert 0 <= data[0]['sound_effect']['language'] <= SoundEffectConstants.FINAL_LANGUAGE

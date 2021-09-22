@@ -18,6 +18,13 @@ sound_effect_example = {
     }
 }
 
+lid_action_example = {
+    'type': 'command',
+    'lid_action': {
+        'action': 'close'  # or 'open'
+    }
+}
+
 
 @dataclass
 class Movement:
@@ -87,3 +94,27 @@ class SoundEffect:
     def __iter__(self):
         yield 'type', 'command'
         yield 'sound_effect', {'mode': self.mode, 'random': self.random, 'language': self.language}
+
+
+@dataclass
+class LidAction:
+    action: str
+
+    def __init__(self, data):
+        """
+        action: 'open' or 'close'
+        :param data: action
+        """
+        if type(data) is dict:
+            assert data['type'] == 'command'
+            assert data['lid_action']['action'] == 'open' or data['lid_action']['action'] == 'close'
+
+            self.action = data['lid_action']['action']
+        elif type(data) is str:
+            assert data == 'open' or data == 'close'
+        else:
+            raise TypeError
+
+    def __iter__(self):
+        yield 'type', 'command'
+        yield 'lid_action', {'action': self.action}

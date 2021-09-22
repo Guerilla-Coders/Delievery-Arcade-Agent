@@ -6,7 +6,7 @@ import socketio
 from da_pkg.config_fetcher.config_fetcher import fetch_config
 from da_pkg.config_fetcher.network_config import NetworkConfig
 from da_pkg.agent import DeliveryArcadeAgent
-from da_pkg.datatypes.commands import Movement, SoundEffect
+from da_pkg.datatypes.commands import Movement, SoundEffect, LidAction
 
 sio = socketio.Client()
 
@@ -34,12 +34,16 @@ if __name__ == "__main__":
     def receive_command(data):
         rospy.loginfo(f'Received command from server. data: {str(data)[:20]}')
         if 'movement' in data:
-            rospy.loginfo(f'Command is "Movement"')
+            rospy.loginfo(f'Command is "Movement" {data["movement"][:20]}')
             command = Movement(data)
             Robot.movement_publisher.set_movement(command)
         elif 'sound_effect' in data:
-            rospy.loginfo(f'Command is "SoundEffect')
+            rospy.loginfo(f'Command is "SoundEffect" {data["sound_effect"][:20]}')
             command = SoundEffect(data)
+            pass
+        elif 'lid_action' in data:
+            rospy.loginfo(f'Command is "LidAction" {data["lid_action"][:20]}')
+            command = LidAction(data)
             pass
 
 

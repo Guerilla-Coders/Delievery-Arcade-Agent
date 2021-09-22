@@ -9,22 +9,6 @@ movement_example = {
     }
 }
 
-sound_effect_example = {
-    'type': 'command',
-    'sound_effect': {
-        'mode': SoundEffectConstants.DEFAULT_MODE,
-        'random': SoundEffectConstants.DEFAULT_RANDOM,
-        'language': SoundEffectConstants.DEFAULT_LANGUAGE
-    }
-}
-
-lid_action_example = {
-    'type': 'command',
-    'lid_action': {
-        'action': 'close'  # or 'open'
-    }
-}
-
 
 @dataclass
 class Movement:
@@ -55,6 +39,16 @@ class Movement:
     def __iter__(self):
         yield 'type', 'command'
         yield 'movement', {'throttle': self.throttle, 'steer': self.steer}
+
+
+sound_effect_example = {
+    'type': 'command',
+    'sound_effect': {
+        'mode': SoundEffectConstants.DEFAULT_MODE,
+        'random': SoundEffectConstants.DEFAULT_RANDOM,
+        'language': SoundEffectConstants.DEFAULT_LANGUAGE
+    }
+}
 
 
 @dataclass
@@ -94,6 +88,14 @@ class SoundEffect:
     def __iter__(self):
         yield 'type', 'command'
         yield 'sound_effect', {'mode': self.mode, 'random': self.random, 'language': self.language}
+
+
+lid_action_example = {
+    'type': 'command',
+    'lid_action': {
+        'action': 'close'  # or 'open'
+    }
+}
 
 
 @dataclass

@@ -4,9 +4,9 @@ from .activities.sound_effect_publisher import SoundEffectPublisher
 from .datatypes.information import Information
 import time
 
-FREQUENT = 1
-OFTEN = 5
-RARELY = 20
+FREQUENT = 5
+OFTEN = 20
+RARELY = 100
 
 
 class DeliveryArcadeAgent:
@@ -15,7 +15,6 @@ class DeliveryArcadeAgent:
     def __init__(self):
         self.movement_publisher = MovementPublisher()
         self.sound_effect_publisher = SoundEffectPublisher()
-
         self.information_subscriber = InformationSubscriber()
 
         self.frequent_task_timer = 0

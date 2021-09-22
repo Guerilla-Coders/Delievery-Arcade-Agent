@@ -41,7 +41,7 @@ class Movement:
         elif len(data) == 2:
             assert -32 <= data[0] < 32
             assert -32 <= data[1] < 32
-            self.throttle, self.steer = data
+            self.throttle, self.steer = int(data[0]), int(data[1])
         else:
             raise TypeError
 

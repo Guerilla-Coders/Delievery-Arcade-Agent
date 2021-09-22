@@ -1,6 +1,6 @@
 from .activities.movement_publisher import MovementPublisher
 from .activities.information_subscriber import InformationSubscriber
-from .activities.sound_effects.sound_effect_publisher import SoundEffectPublisher
+from .activities.sound_effect_publisher import SoundEffectPublisher
 from .datatypes.information import Information
 import time
 

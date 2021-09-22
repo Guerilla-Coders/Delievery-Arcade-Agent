@@ -12,7 +12,8 @@ class Limits:
     control_linear_vel = 0.0
     control_angular_vel = 0.0
 
-class SoundEffectsConstants:
+
+class SoundEffectConstants:
     """mode"""
     GREETING = 0
     APOLOGY = 1

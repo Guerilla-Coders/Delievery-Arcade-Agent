@@ -40,7 +40,7 @@ if __name__ == "__main__":
         elif 'sound_effect' in data:
             rospy.loginfo(f'Command is "SoundEffect" {str(data["sound_effect"])}')
             command = SoundEffect(data)
-            pass
+            Robot.sound_effect_publisher.set_soundeffect(command)
         elif 'lid_action' in data:
             rospy.loginfo(f'Command is "LidAction" {str(data["lid_action"])}')
             command = LidAction(data)

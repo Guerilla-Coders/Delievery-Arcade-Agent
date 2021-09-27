@@ -23,8 +23,8 @@ class DeliveryArcadeAgent:
 
     def run(self) -> tuple:
         self.movement_publisher.run()
-        # self.sound_effect_publisher.run()
-        self.sound_effect_publisher.is_msg_going_well()
+        self.sound_effect_publisher.run()
+        # self.sound_effect_publisher.is_msg_going_well()
 
         output = [None, None, None]
 

@@ -10,7 +10,7 @@ class MovementPublisher:
         # publishing topic name: cmd_vel
         self.publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         # Node name configuration
-        rospy.init_node('movement')
+        rospy.init_node('Movement')
         rospy.loginfo(f"Initialized node: movement")
         self.twist = Twist()
 

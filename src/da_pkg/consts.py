@@ -14,26 +14,46 @@ class Limits:
 
 
 class SoundEffectConstants:
-    """mode"""
-    GREETING = 0
-    APOLOGY = 1
-    APPRECIATION = 2
-    YIELD = 3
-    PIGEON = 4
+    silence = "SILENCE"
+    greeting = "GREETING"
+    apology = "APOLOGY"
+    appreciation = "APPRECIATION"
+    yield_request = "YIELD"
+    alert = "ALERT"
+    pigeon = "PIGEON"
 
-    DEFAULT_MODE = 0
-    FINAL_MODE = 4
+    english = "EN"
+    korean = "KR"
+    spanish = "ES"
 
-    """stochasiticity"""
-    RANDOM = 1
+    code = ["GREETING", "APOLOGY", "APPRECIATION", "YIELD", "ALERT", "PIGEON"]
+    speech_needed_code = ["GREETING", "APOLOGY", "APPRECIATION", "YIELD"]
+    audio_needed_code = ["ALERT", "PIGEON"]
+    language = ["EN", "KR", "ES"]
 
-    DEFAULT_RANDOM = 1
-    FINAL_RANDOM = 1
 
-    """language"""
-    ENGLISH = 0
-    KOREAN = 1
-    SPANISH = 2
+class SpeechData:
+    lines = {
+        SoundEffectConstants.english:
+            {
+                SoundEffectConstants.greeting: ["Nice to meet you, I am here with your foods",
+                                                "Finally! A worthy opponent! Our battle will be legendery!"],
+                SoundEffectConstants.apology: [
+                    "I am so sorry for my mistakes! It won't happen again.",
+                    "My apologies. Could you please forgive me for that?"
+                ],
+                SoundEffectConstants.appreciation: [
+                    "Thank you so much.",
+                    "Thanks. My owner also wants me to send his best appreciation to you."
+                ],
+                SoundEffectConstants.yield_request: [
+                    "Sir, I am sorry to bother you, but could you step aside please?",
+                    "Sir, could you forgive me for asking you to step aside please? I am in a hurry."
+                ]
+            }
+    }
 
-    DEFAULT_LANGUAGE = 0
-    FINAL_LANGUAGE = 2
+
+class ActionConstants:
+    lid_open = "OPEN"
+    lid_close = "CLOSE"

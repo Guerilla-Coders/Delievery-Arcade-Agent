@@ -1,0 +1,2 @@
+string language
+string speech_line

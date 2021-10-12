@@ -53,7 +53,8 @@ catkin_python_setup()
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  sound_effect.msg
+  # sound_effect.msg
+  speech.msg
 )
 
 ## Generate services in the 'srv' folder

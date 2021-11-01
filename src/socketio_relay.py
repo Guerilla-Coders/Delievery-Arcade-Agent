@@ -44,7 +44,7 @@ if __name__ == "__main__":
         elif 'lid_action' in data:
             rospy.loginfo(f'Command is "LidAction" {str(data["lid_action"])}')
             command = LidAction(data)
-            pass
+            Robot.action_publisher.set_action(command)
 
 
     @sio.event
